@@ -1,0 +1,44 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "api/main.py",
+      "use": "@vercel/python",
+      "config": {
+        "runtime": "python3.13",
+        "maxLambdaSize": "15mb",
+        "includeFiles": [
+          "api/main.py"
+        ]
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api(.*)",
+      "dest": "api/main.py",
+      "methods": ["GET"]
+    },
+    {
+      "src": "/docs",
+      "dest": "api/main.py",
+      "methods": ["GET"]
+    },
+    {
+      "src": "/openapi.json",
+      "dest": "api/main.py",
+      "methods": ["GET"]
+    },
+    {
+      "src": "/redoc",
+      "dest": "api/main.py",
+      "methods": ["GET"]
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "api/main.py"
+    }
+  ]
+}
