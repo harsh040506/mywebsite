@@ -6,36 +6,27 @@
       "use": "@vercel/python",
       "config": {
         "runtime": "python3.13",
-        "maxLambdaSize": "15mb",
-        "includeFiles": [
-          "api/main.py"
-        ]
+        "maxLambdaSize": "15mb"
       }
     }
   ],
-  "routes": [
-    {
-      "src": "/api(.*)",
-      "dest": "api/main.py",
-      "methods": ["GET"]
-    },
-    {
-      "src": "/docs",
-      "dest": "api/main.py",
-      "methods": ["GET"]
-    },
-    {
-      "src": "/openapi.json",
-      "dest": "api/main.py",
-      "methods": ["GET"]
-    },
-    {
-      "src": "/redoc",
-      "dest": "api/main.py",
-      "methods": ["GET"]
-    }
-  ],
   "rewrites": [
+    {
+      "source": "/api",
+      "destination": "api/main.py"
+    },
+    {
+      "source": "/docs",
+      "destination": "api/main.py"
+    },
+    {
+      "source": "/openapi.json",
+      "destination": "api/main.py"
+    },
+    {
+      "source": "/redoc",
+      "destination": "api/main.py"
+    },
     {
       "source": "/(.*)",
       "destination": "api/main.py"
