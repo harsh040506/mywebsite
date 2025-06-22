@@ -7,7 +7,7 @@ on:
     - cron: '30 5 * * *'
   workflow_dispatch:
 
-# VITAL FIX: This block grants the necessary permissions for the GITHUB_TOKEN.
+# VITAL: This block grants the necessary permissions for the GITHUB_TOKEN.
 # The 'git push' command will fail without 'contents: write'.
 permissions:
   contents: write
@@ -21,7 +21,8 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      # Step 2: A step that includes the required email in its name
+      # Step 2: THIS IS THE REQUIRED STEP THAT WAS MISSING.
+      # It includes the specified email in its 'name'.
       - name: Step with email 24f3004403@ds.study.iitm.ac.in
         run: echo "This step is included to meet the task requirements."
 
@@ -39,8 +40,7 @@ jobs:
           git add daily-log.txt
           
           # Commit the changes with a standard message.
-          # The [skip ci] in the message prevents the commit from triggering other workflows.
-          git commit -m "Automated daily commit [skip ci]"
+          git commit -m "Automated daily commit"
           
           # Push the changes back to the main branch of the repository.
           git push
