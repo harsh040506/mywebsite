@@ -1,0 +1,55 @@
+# A friendly name for the workflow, which will be displayed in the GitHub Actions tab.
+name: Daily Commit
+
+# This section defines the triggers that will run the workflow.
+on:
+  # 1. Schedule Trigger: This uses cron syntax to run the workflow automatically.
+  # The syntax '30 5 * * *' means the workflow will run at 05:30 UTC every day.
+  # NOTE: GitHub Actions schedules can be delayed during periods of high load.
+  schedule:
+    - cron: '30 5 * * *'
+
+  # 2. Manual Trigger: This allows you to run the workflow manually from the Actions tab.
+  # It's essential for testing and for the verification step in this task.
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel.
+jobs:
+  # We define a single job called 'daily-commit-job'.
+  daily-commit-job:
+    # The type of runner that the job will run on. 'ubuntu-latest' is a standard choice.
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job.
+    steps:
+      # Step 1: Check out the repository's code
+      # This action checks out your repository onto the runner, allowing you to run scripts
+      # or other actions against your code (e.g., commit and push).
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      # Step 2: A step that includes the required email in its name
+      # This fulfills the specific requirement from the prompt.
+      - name: Step with email 24f3004403@ds.study.iitm.ac.in
+        run: echo "This step is included to meet the task requirements."
+
+      # Step 3: Create a commit
+      # This multi-line script performs the git operations to create and push a commit.
+      - name: Create a new commit
+        run: |
+          # Configure git with a bot user name and email for attribution.
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          
+          # Create or update a file to have something to commit.
+          # We append the current date and time to a log file.
+          date >> daily-log.txt
+          
+          # Stage the new changes.
+          git add daily-log.txt
+          
+          # Commit the changes with a standard message.
+          git commit -m "Automated daily commit"
+          
+          # Push the changes back to the main branch of the repository.
+          git push
